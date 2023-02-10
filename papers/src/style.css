@@ -15,7 +15,7 @@ chat.window{
     box-sizing: border-box;
 }
 chat.message{
-    max-width: 70%;
+    max-width: 85%;
     background-color: #ffffff;
     line-height: 20px;
     padding: 5px 12px;
