@@ -40,3 +40,7 @@ chat.reply{
     overflow: hidden;
     border-left: 2px solid #3f3f3f;
 }
+chat l{
+    color: #006eff;
+    font-weight: 500;
+}
