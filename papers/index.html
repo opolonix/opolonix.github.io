@@ -54,10 +54,13 @@
         </main>
     </div>
     <script>
-        const response = fetch('https://opolonix.github.io/papers/src/texts.txt', {method: 'GET'});
-        response
-            .then(response => response.json())
-            .then(data => console.log(data));
+        function load_texts() {
+            var data = undefined
+            const response = fetch('https://opolonix.github.io/papers/src/texts.json', {method: 'GET'});
+            return response.then(response => {return {text:response.json(), response:response}})
+        }
+        texts = load_texts()
+        console.log(texts.then(response => {return response.text}));
         function search(text){
             return undefined
         }
