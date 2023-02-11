@@ -54,6 +54,10 @@
         </main>
     </div>
     <script>
+        const response = fetch('https://opolonix.github.io/papers/src/texts.txt', {method: 'GET'});
+        response
+            .then(response => response.json())
+            .then(data => console.log(data));
         function search(text){
             return undefined
         }
