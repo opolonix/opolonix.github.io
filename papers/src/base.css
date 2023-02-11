@@ -22,10 +22,6 @@ br, object{
     background: #d1d1d1;
     color: #222222;
 }
-l::selection{
-    background: #d1d1d1;
-    color: #006eff;
-}
 a{
     color: #006eff;
     text-decoration: none;
