@@ -21,9 +21,12 @@
         .container .color.generate{border: none; padding: 8px 15px; border-radius: 5px; outline: none; cursor: pointer; transition: 200ms; user-select: none; background: none;}
         .container .color.historybtn{width: 30px; height: 30px; background-color: #fff; position: absolute; z-index: 3; border-radius: 50%; outline-offset: 2px; transition: 200ms; cursor: pointer; top: calc(20% + 20px); right: 20px;}
         
-        .history{position: absolute;top: 15px;right: 60px;background-color: #fff; padding: 10px;border-radius: 8px; display: flex; flex-direction: column; grid-gap: 10px; max-height: 300px; overflow-y: scroll; overflow-x: hidden; cursor: pointer;}
+        .history{position: absolute; top: 15px; right: 60px; background-color: #fff; padding: 10px; border-radius: 8px; display: flex; flex-direction: column; max-height: 300px; overflow-y: scroll; overflow-x: hidden; cursor: pointer;}
         .history::-webkit-scrollbar {width: 0;}
-        .history .color.item{display: flex; grid-gap: 10px;}
+        .history .color.item{display: flex; grid-gap: 10px; padding: 5px 0;}
+        .history .color.item:first-child{padding: 0 0 5px 0;}
+        .history .color.item:last-child{padding: 5px 0 0 0;}
+        .history .color.item:only-child{padding: 0;}
         .history .color.demo{width: 20px; height: 20px; border-radius: 4px;}
 
     </style>
@@ -64,13 +67,21 @@
         var now_hex = generate_hex()
         const change_color = (hex) => {
             now_hex = hex
-            color_history_arr.unshift(hex)
+            if(color_history_arr[0] != now_hex) color_history_arr.unshift(hex)
             color_hex.textContent = hex;
             rendom_color_btn.style = `outline: 2px solid ${hex}`
             color_history.style = `outline: 2px solid ${hex}`
             color_block.style = `background-color: ${hex}; box-shadow: 5px 5px 10px 1px ${hex}70;`;
             document.body.style = `background-color: ${hex}50;`
         }
+        function componentToHex(c) {
+            var hex = c.toString(16);
+            return hex.length == 1 ? "0" + hex : hex;
+        }
+        function rgbToHex([r, g, b]) {
+            return "#" + componentToHex(r) + componentToHex(g) + componentToHex(b);
+        }
+
         const open_color_history = () => {
             if(hist_open == false){
                 hist_open = true;
@@ -82,6 +93,12 @@
                     history_item.innerHTML = `<div class="color demo" style="background-color: ${color_history_arr[i]}"></div><div class="color hex">${color_history_arr[i]}</div>`;
                     history_contaier.append(history_item);
                 }
+                history_contaier.addEventListener('click', () => {
+                    elem_class = event.srcElement.classList.value
+                    if (elem_class == 'color hex'){change_color(event.srcElement.textContent);}
+                    if (elem_class == 'color item'){change_color(event.srcElement.childNodes[1].textContent)}
+                    if (elem_class == 'color demo'){hex = event.srcElement.style.backgroundColor.replace('rgb(', '').replace(')', '').split(','); for (let i in hex){hex[i] = Math.floor(hex[i])}; change_color(rgbToHex([hex[0], hex[1], hex[2]]));}
+                })
                 document.querySelector('body').append(history_contaier);
             }
             else{hist_open = false; document.querySelector('.color.history').remove();}
@@ -92,7 +109,7 @@
         rendom_color_btn.addEventListener('blur', (event) => {rendom_color_btn.style = `outline: 1px solid ${now_hex}`})
         document.body.addEventListener('keydown', (event) => {if (hist_open == false){if (contains(event.keyCode, [37, 38, 39, 40, 13])){change_color(generate_hex())}}})
         document.body.addEventListener('touchstart', (event) => {startX = event.touches[0].clientX; timestampStart = event.timeStamp;})
-        document.body.addEventListener('click', (event) => {if (event.target.classList[1] == 'hex' || event.target.classList.value == 'color history' || event.target.classList.value == 'color demo'){}else if (event.target.classList[1] == 'historybtn'){open_color_history()}else if (hist_open == true){open_color_history()}})
+        document.body.addEventListener('click', (event) => {if (event.target.classList[1] == 'hex' || contains(event.target.classList.value, ['color history', 'color demo', 'color item'])){}else if (event.target.classList[1] == 'historybtn'){open_color_history()}else if (hist_open == true){open_color_history()}})
         document.body.addEventListener('touchend', (event) => {if (Math.abs(startX - event.changedTouches[0].clientX) > 70 && event.timeStamp - timestampStart < 300){if (hist_open == true){open_color_history()}; change_color(generate_hex())}})
         
         change_color(now_hex)
