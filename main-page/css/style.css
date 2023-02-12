@@ -10,5 +10,5 @@
     position: absolute;
     width: 600px;
     height: 600px;
-    background: radial-gradient(circle, #FD2EBA 10%, #0e0e0e 70%);
-}
+    /* background: radial-gradient(circle, #FD2EBA 10%, #0e0e0e 70%);*/
+} 
