@@ -8,8 +8,9 @@
 </head>
 <body>
     <style>
+
         *{font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; box-sizing: border-box;}
-        *::selection{color: #000000; background-color: #e9e9e9b5;}
+        *::selection{color: #ffffff; background-color: #b96271;}
         body{height: 100vh; padding: 0; margin: 0; transition: 200ms;}
         main{height: 100%;}
         body, html{-webkit-tap-highlight-color: #ffffff00; -webkit-tap-highlight-color: transparent;}
@@ -20,22 +21,11 @@
         .container .color.generate{border: none; padding: 8px 15px; border-radius: 5px; outline: none; cursor: pointer; transition: 200ms; user-select: none; background: none;}
         .container .color.historybtn{width: 30px; height: 30px; background-color: #fff; position: absolute; z-index: 3; border-radius: 50%; outline-offset: 2px; cursor: pointer; top: calc(20% + 20px); right: 20px;}
         
-        .history{
-            position: absolute;
-            top: 15px;
-            right: 60px;
-            background-color: #fff;
-            padding: 10px;
-            border-radius: 8px;
-            display: flex;
-            flex-direction: column;
-            grid-gap: 10px;
-            max-height: 300px;
-            overflow-y: scroll;
-            overflow-x: hidden;
-        }
+        .history{position: absolute;top: 15px;right: 60px;background-color: #fff;padding: 10px;border-radius: 8px;display: flex;flex-direction: column; grid-gap: 10px;max-height: 300px;overflow-y: scroll;overflow-x: hidden;cursor: pointer;}
+        .history::-webkit-scrollbar {width: 0;}
         .history .color.item{display: flex; grid-gap: 10px;}
-        .history .color.demo{width: 20px; height: 20px; background-color: #333; border-radius: 4px;}
+        .history .color.demo{width: 20px; height: 20px; border-radius: 4px;}
+
     </style>
     <main>
         <div class="color container">
@@ -43,56 +33,6 @@
             <div class="color block"></div>
             <button class="color generate" autofocus>Random color</button>
             <div class="color historybtn close"></div>
-        </div>
-        <div class="color history">
-            <div class="color item">
-                <div class="color demo"></div>
-                <div class="color hex">#333333</div>
-            </div>
-            <div class="color item">
-                <div class="color demo"></div>
-                <div class="color hex">#333333</div>
-            </div>
-            <div class="color item">
-                <div class="color demo"></div>
-                <div class="color hex">#333333</div>
-            </div>
-            <div class="color item">
-                <div class="color demo"></div>
-                <div class="color hex">#333333</div>
-            </div>
-            <div class="color item">
-                <div class="color demo"></div>
-                <div class="color hex">#333333</div>
-            </div>
-            <div class="color item">
-                <div class="color demo"></div>
-                <div class="color hex">#333333</div>
-            </div>
-            <div class="color item">
-                <div class="color demo"></div>
-                <div class="color hex">#333333</div>
-            </div>
-            <div class="color item">
-                <div class="color demo"></div>
-                <div class="color hex">#333333</div>
-            </div>
-            <div class="color item">
-                <div class="color demo"></div>
-                <div class="color hex">#333333</div>
-            </div>
-            <div class="color item">
-                <div class="color demo"></div>
-                <div class="color hex">#333333</div>
-            </div>
-            <div class="color item">
-                <div class="color demo"></div>
-                <div class="color hex">#333333</div>
-            </div>
-            <div class="color item">
-                <div class="color demo"></div>
-                <div class="color hex">#333333</div>
-            </div>
         </div>
     </main>
     <script>
@@ -103,6 +43,8 @@
         const hex_range = ['1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f']
         var timestampStart, startX = 0
         var is_mobile
+        var color_history_arr = []
+        var hist_open = false
 
         const contains = (elem, arr) => {for (var i = 0; i < arr.length; i++) {if (arr[i] === elem) {return true;}} return false;}
         const getRandomInt = (max) => {return Math.floor(Math.random() * max);}
@@ -123,22 +65,40 @@
         var now_hex = generate_hex()
         const change_color = (hex) => {
             now_hex = hex
+            color_history_arr.unshift(hex)
             color_hex.textContent = hex;
             rendom_color_btn.style = `outline: 2px solid ${hex}`
             color_history.style = `outline: 2px solid ${hex}`
             color_block.style = `background-color: ${hex}; box-shadow: 5px 5px 10px 1px ${hex}70;`;
             document.body.style = `background-color: ${hex}50;`
         }
-        const open_color_history = () => {}
+        const open_color_history = () => {
+            if(hist_open == false){
+                hist_open = true;
+                history_contaier = document.createElement('div');
+                history_contaier.classList = 'color history';
+                for(let i in color_history_arr){
+                    history_item = document.createElement('div');
+                    history_item.classList = 'color item';
+                    history_item.innerHTML = `<div class="color demo" style="background-color: ${color_history_arr[i]}"></div><div class="color hex">${color_history_arr[i]}</div>`;
+                    history_contaier.append(history_item);
+                }
+                document.querySelector('body').append(history_contaier);
+            }
+            else{
+                hist_open = false;
+                document.querySelector('.color.history').remove();
+            }
+        }
 
 
-        rendom_color_btn.addEventListener('click', (event) => {change_color(generate_hex())})
+        rendom_color_btn.addEventListener('click', (event) => {if (hist_open == false){change_color(generate_hex())}})
         rendom_color_btn.addEventListener('focus', (event) => {rendom_color_btn.style = `outline: 2px solid ${now_hex}`})
         rendom_color_btn.addEventListener('blur', (event) => {rendom_color_btn.style = `outline: 1px solid ${now_hex}`})
-        document.body.addEventListener('keydown', (event) => {if (contains(event.keyCode, [37, 38, 39, 40, 13])){change_color(generate_hex())}})
-        document.body.addEventListener('touchstart', (event) => {startX = event.touches[0].clientX; timestampStart = event.timeStamp;})
-        document.body.addEventListener('touchend', (event) => {if (Math.abs(startX - event.changedTouches[0].clientX) > 70 && event.timeStamp - timestampStart < 300){change_color(generate_hex())}})
-        color_history.addEventListener('click', (event) => {console.log('open history');})
+        document.body.addEventListener('keydown', (event) => {if (hist_open == false){if (contains(event.keyCode, [37, 38, 39, 40, 13])){change_color(generate_hex())}}})
+        document.body.addEventListener('touchstart', (event) => {if (hist_open == false){startX = event.touches[0].clientX; timestampStart = event.timeStamp;}})
+        document.body.addEventListener('click', (event) => {if (event.target.classList[1] == 'hex' || event.target.classList.value == 'color history' || event.target.classList.value == 'color demo'){}else if (event.target.classList[1] == 'historybtn'){open_color_history()}else if (hist_open == true){open_color_history()}})
+        document.body.addEventListener('touchend', (event) => {if (hist_open == false){if (Math.abs(startX - event.changedTouches[0].clientX) > 70 && event.timeStamp - timestampStart < 300){change_color(generate_hex())}}})
         
         change_color('#9d97b4')
         if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|BB|PlayBook|IEMobile|Windows Phone|Kindle|Silk|Opera Mini/i.test(navigator.userAgent)) {is_mobile = true;} 
