@@ -54,7 +54,7 @@
         document.body.addEventListener('keydown', (event) => {if (contains(event.keyCode, [37, 38, 39, 40, 13])){change_color(generate_hex())}})
         document.body.addEventListener('touchstart', (event) => {startX = event.touches[0].clientX; timestampStart = event.timeStamp;})
         document.body.addEventListener('touchend', (event) => {
-            if (Math.abs(startX - event.changedTouches[0].clientX) > 100 && event.timeStamp - timestampStart < 300){
+            if (Math.abs(startX - event.changedTouches[0].clientX) > 70 && event.timeStamp - timestampStart < 300){
                 change_color(generate_hex())
             }
         })
