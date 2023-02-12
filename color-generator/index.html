@@ -30,6 +30,9 @@
         const color_block = document.querySelector('.color.block')
         const color_hex = document.querySelector('.color.hex')
         const hex_range = [1, 2, 3, 4, 5, 6, 7, 8, 9, 'a', 'b', 'c', 'd', 'e', 'f']
+        var timestampStart, startX = 0
+
+        const contains = (elem, arr) => {for (var i = 0; i < arr.length; i++) {if (arr[i] === elem) {return true;}} return false;}
         const getRandomInt = (max) => {return Math.floor(Math.random() * max);}
         const generate_hex = () => {
             var result = '#';
@@ -44,20 +47,18 @@
             color_block.style = `background-color: ${hex}; box-shadow: 5px 5px 10px 1px ${hex}70;`;
             document.body.style = `background-color: ${hex}50;`
         }
-        rendom_color_btn.addEventListener('click', (event) => {
-            change_color(generate_hex())
-        })
-        rendom_color_btn.addEventListener('focus', (event) => {
-            rendom_color_btn.style = `outline: 2px solid ${now_hex}`
-        })
-        rendom_color_btn.addEventListener('blur', (event) => {
-            rendom_color_btn.style = `outline: 1px solid ${now_hex}`
-        })
-        document.body.addEventListener('keydown', (event) => {
-            if (event.keyCode == 39){
+
+        rendom_color_btn.addEventListener('click', (event) => {change_color(generate_hex())})
+        rendom_color_btn.addEventListener('focus', (event) => {rendom_color_btn.style = `outline: 2px solid ${now_hex}`})
+        rendom_color_btn.addEventListener('blur', (event) => {rendom_color_btn.style = `outline: 1px solid ${now_hex}`})
+        document.body.addEventListener('keydown', (event) => {if (contains(event.keyCode, [37, 38, 39, 40, 13])){change_color(generate_hex())}})
+        document.body.addEventListener('touchstart', (event) => {startX = event.touches[0].clientX; timestampStart = event.timeStamp;})
+        document.body.addEventListener('touchend', (event) => {
+            if (Math.abs(startX - event.changedTouches[0].clientX) > 100 && event.timeStamp - timestampStart < 300){
                 change_color(generate_hex())
             }
         })
+        
         change_color(now_hex)
     </script>
 </body>
