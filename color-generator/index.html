@@ -49,26 +49,14 @@
         var hist_open = false
 
         const contains = (elem, arr) => {for (var i = 0; i < arr.length; i++) {if (arr[i] === elem) {return true;}} return false;}
-        const getRandomInt = (max) => {return Math.floor(Math.random() * max);}
-        const len = (list) => {count = 0;for (let key in list) {count++}; return count;}
-        const blackout = (power, hex) => {
-            hex = hex.substring(1)
-            result = ''
-            for (let i in hex){
-                hex_range.indexOf(hex[i])
-                console.log(hex_range.indexOf(hex[i]));
-            }
-            return hex
-        }
         const generate_hex = () => {
             var result = '#';
-            for(var step = 0; step < 6; step++){result += hex_range[getRandomInt(15)]};
+            for(var step = 0; step < 6; step++){result += hex_range[Math.floor(Math.random() * 15)]};
             return result;
         }
         var now_hex = generate_hex()
         const change_color = (hex, add_to_hist=true) => {
             now_hex = hex
-            // if (len(color_history_arr) >= 50) color_history_arr = color_history_arr.slice(0, 49)
             if(color_history_arr[0] != now_hex && add_to_hist) color_history_arr.unshift(hex.toUpperCase())
             color_hex.textContent = hex.toUpperCase();
             rendom_color_btn.style = `outline: 2px solid ${hex}`
@@ -113,7 +101,7 @@
         document.body.addEventListener('touchstart', (event) => {startX = event.touches[0].clientX; timestampStart = event.timeStamp;})
         document.body.addEventListener('click', (event) => {if (event.target.classList[1] == 'hex' || contains(event.target.classList.value, ['color history', 'color demo', 'color item'])){}else if (event.target.classList[1] == 'historybtn'){open_color_history()}else if (hist_open == true){open_color_history()}})
         document.body.addEventListener('touchend', (event) => {if (Math.abs(startX - event.changedTouches[0].clientX) > 70 && event.timeStamp - timestampStart < 300){if (hist_open == true){open_color_history()}; change_color(generate_hex())}})
-        
+
         change_color(now_hex)
     </script>
 </body>
