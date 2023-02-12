@@ -8,7 +8,6 @@
 </head>
 <body>
     <style>
-
         *{font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; box-sizing: border-box;}
         *::selection{color: #ffffff; background-color: #b96271;}
         body{height: 100vh; padding: 0; margin: 0; transition: 200ms;}
@@ -28,7 +27,6 @@
         .history .color.item:last-child{padding: 5px 0 0 0;}
         .history .color.item:only-child{padding: 0;}
         .history .color.demo{width: 20px; height: 20px; border-radius: 4px;}
-
     </style>
     <main>
         <div class="color container">
@@ -64,14 +62,8 @@
             color_block.style = `background-color: ${hex}; box-shadow: 5px 5px 10px 1px ${hex}70;`;
             document.body.style = `background-color: ${hex}50;`
         }
-        function componentToHex(c) {
-            var hex = c.toString(16);
-            return hex.length == 1 ? "0" + hex : hex;
-        }
-        function rgbToHex([r, g, b]) {
-            return "#" + componentToHex(r) + componentToHex(g) + componentToHex(b);
-        }
-
+        const componentToHex = (c) => {var hex = c.toString(16); return hex.length == 1 ? "0" + hex : hex;}
+        const rgbToHex= ([r, g, b]) => {return "#" + componentToHex(r) + componentToHex(g) + componentToHex(b);}
         const open_color_history = () => {
             if(hist_open == false){
                 hist_open = true;
