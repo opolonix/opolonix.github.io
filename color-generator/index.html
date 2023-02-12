@@ -44,6 +44,8 @@
             now_hex = hex
             color_hex.textContent = hex;
             rendom_color_btn.style = `outline: 2px solid ${hex}`
+            // color_block.style = `background: linear-gradient(126deg, ${generate_hex()} 0%, ${generate_hex()} 32%, ${hex} 100%); box-shadow: 5px 5px 10px 1px ${hex}70;`;
+            // document.body.style = `background: linear-gradient(126deg, ${hex}50 0%, ${generate_hex()}50 32%, ${generate_hex()}50 100%);`
             color_block.style = `background-color: ${hex}; box-shadow: 5px 5px 10px 1px ${hex}70;`;
             document.body.style = `background-color: ${hex}50;`
         }
@@ -53,11 +55,7 @@
         rendom_color_btn.addEventListener('blur', (event) => {rendom_color_btn.style = `outline: 1px solid ${now_hex}`})
         document.body.addEventListener('keydown', (event) => {if (contains(event.keyCode, [37, 38, 39, 40, 13])){change_color(generate_hex())}})
         document.body.addEventListener('touchstart', (event) => {startX = event.touches[0].clientX; timestampStart = event.timeStamp;})
-        document.body.addEventListener('touchend', (event) => {
-            if (Math.abs(startX - event.changedTouches[0].clientX) > 70 && event.timeStamp - timestampStart < 300){
-                change_color(generate_hex())
-            }
-        })
+        document.body.addEventListener('touchend', (event) => {if (Math.abs(startX - event.changedTouches[0].clientX) > 70 && event.timeStamp - timestampStart < 300){change_color(generate_hex())}})
         
         change_color(now_hex)
     </script>
