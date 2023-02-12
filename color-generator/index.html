@@ -13,25 +13,92 @@
         body{height: 100vh; padding: 0; margin: 0; transition: 200ms;}
         main{height: 100%;}
         body, html{-webkit-tap-highlight-color: #ffffff00; -webkit-tap-highlight-color: transparent;}
-        .color.container{display: flex; flex-direction: column; justify-content: center; align-items: center; height: 100%; transform: translateY(-20%);}
-        .color.block{width: 250px; height: 250px; margin: 15px; border-radius: 7px; transition: 200ms;}
-        .color.hex{margin: 0;}
-        .color.generate{border: none; padding: 8px 15px; border-radius: 5px; outline: none; cursor: pointer; transition: 200ms; user-select: none; background: none;}
-        .color.history{width: 30px; height: 30px; background-color: #fff; position: fixed; z-index: 3; border-radius: 50%; outline-offset: 2px; cursor: pointer; bottom: calc(-20% + 50px);}
-
+        
+        .container{display: flex; flex-direction: column; justify-content: center; align-items: center; height: 100%; transform: translateY(-20%);}
+        .container .color.block{width: 250px; height: 250px; margin: 15px; border-radius: 7px; transition: 200ms;}
+        .container .color.hex{margin: 0;}
+        .container .color.generate{border: none; padding: 8px 15px; border-radius: 5px; outline: none; cursor: pointer; transition: 200ms; user-select: none; background: none;}
+        .container .color.historybtn{width: 30px; height: 30px; background-color: #fff; position: absolute; z-index: 3; border-radius: 50%; outline-offset: 2px; cursor: pointer; top: calc(20% + 20px); right: 20px;}
+        
+        .history{
+            position: absolute;
+            top: 15px;
+            right: 60px;
+            background-color: #fff;
+            padding: 10px;
+            border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+            grid-gap: 10px;
+            max-height: 300px;
+            overflow-y: scroll;
+            overflow-x: hidden;
+        }
+        .history .color.item{display: flex; grid-gap: 10px;}
+        .history .color.demo{width: 20px; height: 20px; background-color: #333; border-radius: 4px;}
     </style>
     <main>
         <div class="color container">
             <p class="color hex"></p>
             <div class="color block"></div>
             <button class="color generate" autofocus>Random color</button>
-            <div class="color history close"></div>
+            <div class="color historybtn close"></div>
+        </div>
+        <div class="color history">
+            <div class="color item">
+                <div class="color demo"></div>
+                <div class="color hex">#333333</div>
+            </div>
+            <div class="color item">
+                <div class="color demo"></div>
+                <div class="color hex">#333333</div>
+            </div>
+            <div class="color item">
+                <div class="color demo"></div>
+                <div class="color hex">#333333</div>
+            </div>
+            <div class="color item">
+                <div class="color demo"></div>
+                <div class="color hex">#333333</div>
+            </div>
+            <div class="color item">
+                <div class="color demo"></div>
+                <div class="color hex">#333333</div>
+            </div>
+            <div class="color item">
+                <div class="color demo"></div>
+                <div class="color hex">#333333</div>
+            </div>
+            <div class="color item">
+                <div class="color demo"></div>
+                <div class="color hex">#333333</div>
+            </div>
+            <div class="color item">
+                <div class="color demo"></div>
+                <div class="color hex">#333333</div>
+            </div>
+            <div class="color item">
+                <div class="color demo"></div>
+                <div class="color hex">#333333</div>
+            </div>
+            <div class="color item">
+                <div class="color demo"></div>
+                <div class="color hex">#333333</div>
+            </div>
+            <div class="color item">
+                <div class="color demo"></div>
+                <div class="color hex">#333333</div>
+            </div>
+            <div class="color item">
+                <div class="color demo"></div>
+                <div class="color hex">#333333</div>
+            </div>
         </div>
     </main>
     <script>
         const rendom_color_btn = document.querySelector('.color.generate')
         const color_block = document.querySelector('.color.block')
-        const color_history = document.querySelector('.color.history')
+        const color_history = document.querySelector('.color.historybtn')
         const color_hex = document.querySelector('.color.hex')
         const hex_range = ['1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f']
         var timestampStart, startX = 0
@@ -59,11 +126,11 @@
             color_hex.textContent = hex;
             rendom_color_btn.style = `outline: 2px solid ${hex}`
             color_history.style = `outline: 2px solid ${hex}`
-            // color_block.style = `background: linear-gradient(126deg, ${generate_hex()} 0%, ${generate_hex()} 32%, ${hex} 100%); box-shadow: 5px 5px 10px 1px ${hex}70;`;
-            // document.body.style = `background: linear-gradient(126deg, ${hex}50 0%, ${generate_hex()}50 32%, ${generate_hex()}50 100%);`
             color_block.style = `background-color: ${hex}; box-shadow: 5px 5px 10px 1px ${hex}70;`;
             document.body.style = `background-color: ${hex}50;`
         }
+        const open_color_history = () => {}
+
 
         rendom_color_btn.addEventListener('click', (event) => {change_color(generate_hex())})
         rendom_color_btn.addEventListener('focus', (event) => {rendom_color_btn.style = `outline: 2px solid ${now_hex}`})
