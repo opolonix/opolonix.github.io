@@ -84,12 +84,8 @@
                 }
                 document.querySelector('body').append(history_contaier);
             }
-            else{
-                hist_open = false;
-                document.querySelector('.color.history').remove();
-            }
+            else{hist_open = false; document.querySelector('.color.history').remove();}
         }
-
 
         rendom_color_btn.addEventListener('click', (event) => {if (hist_open == true){open_color_history()}; change_color(generate_hex())})
         rendom_color_btn.addEventListener('focus', (event) => {rendom_color_btn.style = `outline: 2px solid ${now_hex}`})
