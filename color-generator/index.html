@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Геренрация цветов и градиентов!</title>
+</head>
+<body>
+    <style>
+        *{font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; box-sizing: border-box;}
+        *::selection{color: #000000; background-color: #d9d9d9;}
+        body{height: 100vh; padding: 0; margin: 0; transition: 200ms;}
+        main{height: 100%;}
+        .color.container{display: flex; flex-direction: column; justify-content: center; align-items: center; height: 100%; transform: translateY(-20%);}
+        .color.block{width: 250px; height: 250px; margin: 15px; border-radius: 7px; transition: 200ms;}
+        .color.hex{margin: 0; display: flex; grid-gap: 5px;}
+        .color.copy{height: 20px; display: inline;}
+        .color.generate{border: none; padding: 8px 15px; border-radius: 5px; outline: none; cursor: pointer; transition: 200ms; user-select: none;}
+    </style>
+    <main>
+        <div class="color container">
+            <p class="color hex">#000000<img src="copy.png" class="color copy"></img></p>
+            <div class="color block"></div>
+            <button class="color generate" autofocus>Random color</button>
+        </div>
+    </main>
+    <script>
+        const rendom_color_btn = document.querySelector('.color.generate')
+        const color_block = document.querySelector('.color.block')
+        const color_hex = document.querySelector('.color.hex')
+        const hex_range = [1, 2, 3, 4, 5, 6, 7, 8, 9, 'a', 'b', 'c', 'd', 'e', 'f']
+        const getRandomInt = (max) => {return Math.floor(Math.random() * max);}
+        const generate_hex = () => {
+            var result = '#';
+            for(var step = 0; step < 6; step++){result += hex_range[getRandomInt(15)]};
+            return result;
+        }
+        var now_hex = generate_hex()
+        const change_color = (hex) => {
+            now_hex = hex
+            color_hex.textContent = hex;
+            rendom_color_btn.style = `outline: 2px solid ${hex}`
+            color_block.style = `background-color: ${hex}; box-shadow: 5px 5px 10px 1px ${hex}70;`;
+            document.body.style = `background-color: ${hex}50;`
+        }
+        rendom_color_btn.addEventListener('click', (event) => {
+            change_color(generate_hex())
+        })
+        rendom_color_btn.addEventListener('focus', (event) => {
+            rendom_color_btn.style = `outline: 2px solid ${now_hex}`
+        })
+        rendom_color_btn.addEventListener('blur', (event) => {
+            rendom_color_btn.style = `outline: none`
+        })
+        change_color(now_hex)
+    </script>
+</body>
+</html>
