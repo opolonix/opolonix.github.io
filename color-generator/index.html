@@ -9,19 +9,18 @@
 <body>
     <style>
         *{font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; box-sizing: border-box;}
-        *::selection{color: #000000; background-color: #d9d9d9;}
+        *::selection{color: #000000; background-color: #e9e9e9b5;}
         body{height: 100vh; padding: 0; margin: 0; transition: 200ms;}
         main{height: 100%;}
         body, html{-webkit-tap-highlight-color: #ffffff00; -webkit-tap-highlight-color: transparent;}
         .color.container{display: flex; flex-direction: column; justify-content: center; align-items: center; height: 100%; transform: translateY(-20%);}
         .color.block{width: 250px; height: 250px; margin: 15px; border-radius: 7px; transition: 200ms;}
-        .color.hex{margin: 0; display: flex; grid-gap: 5px;}
-        .color.copy{height: 20px; display: inline;}
+        .color.hex{margin: 0;}
         .color.generate{border: none; padding: 8px 15px; border-radius: 5px; outline: none; cursor: pointer; transition: 200ms; user-select: none;}
     </style>
     <main>
         <div class="color container">
-            <p class="color hex">#000000<img src="copy.png" class="color copy"></img></p>
+            <p class="color hex"></p>
             <div class="color block"></div>
             <button class="color generate" autofocus>Random color</button>
         </div>
