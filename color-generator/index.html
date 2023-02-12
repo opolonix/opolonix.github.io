@@ -7,19 +7,22 @@
     <title>Геренрация цветов!</title>
 </head>
 <body>
-    <style>
+    <!-- тут все в одном файле, тк... я не знаю, просто захотелось -->
+    <!-- в этом проекте много вещей реализовано только потому, что мне так захотелось, возможно не все решения являются наилучими, но я делал так, чтобы было приятно глазу -->
+    <style> /* основные стили */
+        /* еще мне захотелось все стили для отдельных классов писать в одну строку... прикольно выглядит, но не практично хах */
         *{font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; box-sizing: border-box;}
         *::selection{color: #ffffff; background-color: #b96271;}
         body{height: 100vh; padding: 0; margin: 0; transition: 200ms;}
         main{height: 100%;}
         body, html{-webkit-tap-highlight-color: #ffffff00;}
-
+        /* стили для цветоблока */
         .container{display: flex; flex-direction: column; justify-content: center; align-items: center; height: 100%; transform: translateY(-20%);}
         .container .color.block{width: 250px; height: 250px; margin: 15px; border-radius: 7px; transition: 200ms;}
         .container .color.hex{margin: 0; letter-spacing: 1.5px;}
         .container .color.generate{border: none; padding: 8px 15px; border-radius: 5px; outline: none; cursor: pointer; transition: 200ms; user-select: none; background: none;}
         .container .color.historybtn{width: 30px; height: 30px; background-color: #fff; position: absolute; z-index: 3; border-radius: 50%; outline-offset: 2px; transition: 200ms; cursor: pointer; top: calc(20% + 20px); right: 20px;}
-
+        /* стили для истории сгенерированных цвтов */
         .history{position: absolute; top: 15px; right: 60px; background-color: #fff; padding: 10px; border-radius: 8px; display: flex; flex-direction: column; max-height: 300px; overflow-y: scroll; overflow-x: hidden; cursor: pointer;}
         .history::-webkit-scrollbar {width: 0;}
         .history .color.item{display: flex; grid-gap: 10px; padding: 5px 0;}
@@ -28,7 +31,7 @@
         .history .color.item:only-child{padding: 0;}
         .history .color.demo{width: 20px; height: 20px; border-radius: 4px;}
     </style>
-    <main>
+    <main> <!-- ну реал мало штмл кода вышло, тк часть создается джаваскриптом -->
         <div class="color container">
             <p class="color hex"></p>
             <div class="color block"></div>
@@ -36,7 +39,8 @@
             <div class="color historybtn"></div>
         </div>
     </main>
-    <script>
+    <script> // джаваскрипт код сайта
+        // константы и переменные 
         const rendom_color_btn = document.querySelector('.color.generate')
         const color_block = document.querySelector('.color.block')
         const color_history = document.querySelector('.color.historybtn')
@@ -45,7 +49,7 @@
         var timestampStart, startX = 0
         var color_history_arr = []
         var hist_open = false
-
+        // функции, мне захотелось сделать все через сонст, поэтому так
         const contains = (elem, arr) => {for (var i = 0; i < arr.length; i++) {if (arr[i] === elem) {return true;}} return false;}
         const generate_hex = () => {
             var result = '#';
@@ -85,7 +89,7 @@
             }
             else{hist_open = false; document.querySelector('.color.history').remove();}
         }
-
+        // а тут у меня ивент листенеры на все случаи жизни хахх
         rendom_color_btn.addEventListener('click', (event) => {if (hist_open == true){open_color_history()}; change_color(generate_hex())})
         rendom_color_btn.addEventListener('focus', (event) => {rendom_color_btn.style = `outline: 2px solid ${now_hex}`})
         rendom_color_btn.addEventListener('blur', (event) => {rendom_color_btn.style = `outline: 1px solid ${now_hex}`})
@@ -93,7 +97,7 @@
         document.body.addEventListener('touchstart', (event) => {startX = event.touches[0].clientX; timestampStart = event.timeStamp;})
         document.body.addEventListener('click', (event) => {if (event.target.classList[1] == 'hex' || contains(event.target.classList.value, ['color history', 'color demo', 'color item'])){}else if (event.target.classList[1] == 'historybtn'){open_color_history()}else if (hist_open == true){open_color_history()}})
         document.body.addEventListener('touchend', (event) => {if (Math.abs(startX - event.changedTouches[0].clientX) > 70 && event.timeStamp - timestampStart < 300){if (hist_open == true){open_color_history()}; change_color(generate_hex())}})
-
+        // я думал, что этот блок побольше выйдет, тут должна происходить инициализация функций, но оказалось, что нужно инициализировать только одну
         change_color(now_hex)
     </script>
 </body>
