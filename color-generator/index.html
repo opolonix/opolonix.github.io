@@ -16,24 +16,36 @@
         .color.container{display: flex; flex-direction: column; justify-content: center; align-items: center; height: 100%; transform: translateY(-20%);}
         .color.block{width: 250px; height: 250px; margin: 15px; border-radius: 7px; transition: 200ms;}
         .color.hex{margin: 0;}
-        .color.generate{border: none; padding: 8px 15px; border-radius: 5px; outline: none; cursor: pointer; transition: 200ms; user-select: none;}
+        .color.generate{border: none; padding: 8px 15px; border-radius: 5px; outline: none; cursor: pointer; transition: 200ms; user-select: none; background: none;}
+        .color.history{width: 30px; height: 30px; background-color: #fff; position: absolute; top: calc(20% + 20px); right: 20px; z-index: 3; border-radius: 50%; outline-offset: 2px; cursor: pointer;}
     </style>
     <main>
         <div class="color container">
             <p class="color hex"></p>
             <div class="color block"></div>
             <button class="color generate" autofocus>Random color</button>
+            <div class="color history mobile close"></div>
         </div>
     </main>
     <script>
         const rendom_color_btn = document.querySelector('.color.generate')
         const color_block = document.querySelector('.color.block')
+        const color_history = document.querySelector('.color.history')
         const color_hex = document.querySelector('.color.hex')
-        const hex_range = [1, 2, 3, 4, 5, 6, 7, 8, 9, 'a', 'b', 'c', 'd', 'e', 'f']
+        const hex_range = ['1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f']
         var timestampStart, startX = 0
 
         const contains = (elem, arr) => {for (var i = 0; i < arr.length; i++) {if (arr[i] === elem) {return true;}} return false;}
         const getRandomInt = (max) => {return Math.floor(Math.random() * max);}
+        const blackout = (power, hex) => {
+            hex = hex.substring(1)
+            result = ''
+            for (let i in hex){
+                hex_range.indexOf(hex[i])
+                console.log(hex_range.indexOf(hex[i]));
+            }
+            return hex
+        }
         const generate_hex = () => {
             var result = '#';
             for(var step = 0; step < 6; step++){result += hex_range[getRandomInt(15)]};
@@ -44,6 +56,7 @@
             now_hex = hex
             color_hex.textContent = hex;
             rendom_color_btn.style = `outline: 2px solid ${hex}`
+            color_history.style = `outline: 2px solid ${hex}`
             // color_block.style = `background: linear-gradient(126deg, ${generate_hex()} 0%, ${generate_hex()} 32%, ${hex} 100%); box-shadow: 5px 5px 10px 1px ${hex}70;`;
             // document.body.style = `background: linear-gradient(126deg, ${hex}50 0%, ${generate_hex()}50 32%, ${generate_hex()}50 100%);`
             color_block.style = `background-color: ${hex}; box-shadow: 5px 5px 10px 1px ${hex}70;`;
@@ -58,6 +71,12 @@
         document.body.addEventListener('touchend', (event) => {if (Math.abs(startX - event.changedTouches[0].clientX) > 70 && event.timeStamp - timestampStart < 300){change_color(generate_hex())}})
         
         change_color(now_hex)
+        if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|BB|PlayBook|IEMobile|Windows Phone|Kindle|Silk|Opera Mini/i.test(navigator.userAgent)) {
+            console.log("Вы используете мобильное устройство (телефон или планшет).")
+        } 
+        else {
+            console.log("Вы используете ПК.")
+        }
     </script>
 </body>
 </html>
