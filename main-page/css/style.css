@@ -4,6 +4,7 @@
     position: absolute;
     top: 0;
     left: 0;
+    overflow: hidden;
     background-color: #0e0e0e;
 }
 .sircle{
@@ -11,4 +12,4 @@
     width: 600px;
     height: 600px;
     /* background: radial-gradient(circle, #FD2EBA 10%, #0e0e0e 70%);*/
-} 
+}
