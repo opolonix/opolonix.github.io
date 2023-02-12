@@ -47,6 +47,17 @@
         rendom_color_btn.addEventListener('click', (event) => {
             change_color(generate_hex())
         })
+        rendom_color_btn.addEventListener('focus', (event) => {
+            rendom_color_btn.style = `outline: 2px solid ${now_hex}`
+        })
+        rendom_color_btn.addEventListener('blur', (event) => {
+            rendom_color_btn.style = `outline: 1px solid ${now_hex}`
+        })
+        document.body.addEventListener('keydown', (event) => {
+            if (event.keyCode == 39){
+                change_color(generate_hex())
+            }
+        })
         change_color(now_hex)
     </script>
 </body>
