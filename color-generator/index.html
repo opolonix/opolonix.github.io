@@ -12,6 +12,7 @@
         *::selection{color: #000000; background-color: #d9d9d9;}
         body{height: 100vh; padding: 0; margin: 0; transition: 200ms;}
         main{height: 100%;}
+        body, html{-webkit-tap-highlight-color: #ffffff00; -webkit-tap-highlight-color: transparent;}
         .color.container{display: flex; flex-direction: column; justify-content: center; align-items: center; height: 100%; transform: translateY(-20%);}
         .color.block{width: 250px; height: 250px; margin: 15px; border-radius: 7px; transition: 200ms;}
         .color.hex{margin: 0; display: flex; grid-gap: 5px;}
@@ -46,12 +47,6 @@
         }
         rendom_color_btn.addEventListener('click', (event) => {
             change_color(generate_hex())
-        })
-        rendom_color_btn.addEventListener('focus', (event) => {
-            rendom_color_btn.style = `outline: 2px solid ${now_hex}`
-        })
-        rendom_color_btn.addEventListener('blur', (event) => {
-            rendom_color_btn.style = `outline: none`
         })
         change_color(now_hex)
     </script>
